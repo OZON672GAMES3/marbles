@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: MarbleSprites
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: 4112266946cb0e140bc014b16fff04e3, type: 3}
+    - {fileID: 2800000, guid: 5ae33ebd0075b7d4183bbbb6081ba239, type: 3}
+    - {fileID: 2800000, guid: 4f3be9297a9fe414db364fe08502f5df, type: 3}
+    - {fileID: 2800000, guid: f01f8671bfe115d419aebaf9cfedb48a, type: 3}
+    - {fileID: 2800000, guid: daeff73f2c790964b81062fc331decc8, type: 3}
+    - {fileID: 2800000, guid: ca64ea15712c8ed4b94567406679dff3, type: 3}
+    - {fileID: 2800000, guid: 5e9dbdc3ca24e9348bf1a06293a38d15, type: 3}
+    - {fileID: 2800000, guid: 816da91070ca3bd41b94da7b998a85e1, type: 3}
+    - {fileID: 2800000, guid: 7905d30f86973704486b3fac45f2a9b9, type: 3}
+    - {fileID: 2800000, guid: dd9d5a0b4195e4a48859d748352469d3, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+    packedSpriteRenderDataKeys: []
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites: []
+  m_PackedSpriteNamesToIndex: []
+  m_RenderDataMap: {}
+  m_Tag: Sprites
+  m_IsVariant: 0
