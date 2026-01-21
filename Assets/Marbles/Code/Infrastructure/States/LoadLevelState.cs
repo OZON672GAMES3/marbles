@@ -3,7 +3,7 @@ using Marbles.Code.Infrastructure.SceneLoad;
 
 namespace Marbles.Code.Infrastructure.States
 {
-    public class LoadLevelState :IPayloadedState<string>
+    public class LoadLevelState : IPayloadedState<string>
     {
         private readonly IGameStateMachine _gameStateMachine;
         private readonly ISceneLoader _sceneLoader;

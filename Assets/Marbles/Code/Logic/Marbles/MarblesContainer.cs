@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Marbles.Code.Data.MarbleConfig;
+using Marbles.Code.Infrastructure.Services.GameRuleService;
 using Marbles.Code.Infrastructure.Services.StaticData;
 using UnityEngine;
 using Zenject;
@@ -13,11 +14,15 @@ namespace Marbles.Code.Logic.Marbles
 
         private readonly List<Marble> _marbles = new();
         private IStaticDataService _staticDataService;
+        private IGameOverService _gameOverService;
+        
+        public bool IsFull => _marbles.Count >= Slots.Count;
 
         [Inject]
-        public void Construct(IStaticDataService staticDataService)
+        public void Construct(IStaticDataService staticDataService, IGameOverService gameOverService)
         {
             _staticDataService = staticDataService;
+            _gameOverService = gameOverService;
         }
 
         public void AddMarble(Marble marble)
@@ -35,6 +40,12 @@ namespace Marbles.Code.Logic.Marbles
             Slots[index].SetSprite(config.Sprite);
 
             CheckMatches();
+            _gameOverService.OnMarbleAdded();
+        }
+
+        public void RegisterSlot(SlotView slotView)
+        {
+            Slots.Add(slotView);
         }
 
         public void ClearMarblesContainer()
@@ -44,7 +55,7 @@ namespace Marbles.Code.Logic.Marbles
 
         private void CheckMatches()
         {
-            if (_marbles.Count < 3)
+            if (_marbles.Count < _staticDataService.GameConfig.MatchLength)
                 return;
 
             int count = 1;
@@ -55,9 +66,9 @@ namespace Marbles.Code.Logic.Marbles
                 {
                     count++;
 
-                    if (count >= 3)
+                    if (count >= _staticDataService.GameConfig.MatchLength)
                     {
-                        RemoveMatch(i);
+                        RemoveMatch(i, count);
                         return;
                     }
                 }
@@ -68,9 +79,9 @@ namespace Marbles.Code.Logic.Marbles
             }
         }
 
-        private void RemoveMatch(int endIndex)
+        private void RemoveMatch(int endIndex, int matchCount)
         {
-            int startIndex = endIndex - 2;
+            int startIndex = endIndex - matchCount + 1;
 
             for (int i = endIndex; i >= startIndex; i--)
             {

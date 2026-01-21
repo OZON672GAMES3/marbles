@@ -1,3 +1,4 @@
+using Marbles.Code.Data;
 using Marbles.Code.Data.MarbleConfig;
 
 namespace Marbles.Code.Infrastructure.Services.StaticData
@@ -6,5 +7,6 @@ namespace Marbles.Code.Infrastructure.Services.StaticData
     {
         MarbleConfig GetMarbleConfigByType(MarbleType type);
         void LoadAll();
+        GameConfig GameConfig { get; }
     }
 }

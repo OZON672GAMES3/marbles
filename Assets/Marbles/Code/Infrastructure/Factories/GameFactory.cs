@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Marbles.Code.Infrastructure.AssenManagement;
 using Marbles.Code.Infrastructure.Services.PersistantProgress;
+using Marbles.Code.Infrastructure.Services.StaticData;
 using Marbles.Code.Logic;
 using Marbles.Code.Logic.Marbles;
 using UnityEngine;
@@ -12,14 +13,16 @@ namespace Marbles.Code.Infrastructure.Factories
     {
         private readonly IAssetProvider _assetProvider;
         private readonly DiContainer _container;
+        private readonly IStaticDataService _staticDataService;
 
         public List<ISavedProgressReader> ProgressReaders { get; } = new();
         public List<ISavedProgress> ProgressWriters { get; } = new();
 
-        public GameFactory(IAssetProvider assetProvider, DiContainer container)
+        public GameFactory(IAssetProvider assetProvider, DiContainer container, IStaticDataService staticDataService)
         {
             _assetProvider = assetProvider;
             _container = container;
+            _staticDataService = staticDataService;
         }
         
         public GameObject CreateHud()
@@ -50,11 +53,17 @@ namespace Marbles.Code.Infrastructure.Factories
 
         private void SetupSlotViews(GameObject hudInstance)
         {
-            SlotView[] slotViews = hudInstance.GetComponentsInChildren<SlotView>();
             MarblesContainer container = hudInstance.GetComponentInChildren<MarblesContainer>();
-            
-            foreach (SlotView view in slotViews)
-                container.Slots.Add(view);
+            Transform parent = container.transform;
+
+            for (int i = 0; i < _staticDataService.GameConfig.SlotsCount; i++)
+            {
+                GameObject slotGo = InstantiateRegistered(AssetPath.SlotPath);
+                slotGo.transform.SetParent(parent, false);
+                
+                SlotView slot = slotGo.GetComponent<SlotView>();
+                container.RegisterSlot(slot);
+            }
         }
 
         private GameObject InstantiateRegistered(string prefabPath, Vector3 at)

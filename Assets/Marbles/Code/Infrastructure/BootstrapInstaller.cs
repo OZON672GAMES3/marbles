@@ -1,6 +1,7 @@
 using Marbles.Code.Infrastructure.AssenManagement;
 using Marbles.Code.Infrastructure.Factories;
 using Marbles.Code.Infrastructure.SceneLoad;
+using Marbles.Code.Infrastructure.Services.GameRuleService;
 using Marbles.Code.Infrastructure.Services.PersistantProgress;
 using Marbles.Code.Infrastructure.Services.SaveLoad;
 using Marbles.Code.Infrastructure.Services.StaticData;
@@ -17,6 +18,7 @@ namespace Marbles.Code.Infrastructure
             Container.Bind<ISceneLoader>().To<SceneLoader>().AsSingle();
             Container.Bind<IAssetProvider>().To<AssetProvider>().AsSingle();
             Container.Bind<IStaticDataService>().To<StaticDataService>().AsSingle();
+            Container.Bind<IGameOverService>().To<GameOverService>().AsSingle();
 
             BindSelf();
 
