@@ -1,7 +1,6 @@
 using UnityEngine;
-using Zenject;
 
-namespace Marbles.Code.Infrastructure.AssenManagement
+namespace Marbles.Code.Infrastructure.AssetManagement
 {
     public class AssetProvider : IAssetProvider
     {

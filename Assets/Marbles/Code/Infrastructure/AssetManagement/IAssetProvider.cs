@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Marbles.Code.Infrastructure.AssenManagement
+namespace Marbles.Code.Infrastructure.AssetManagement
 {
     public interface IAssetProvider
     {

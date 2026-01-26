@@ -19,13 +19,12 @@ namespace Marbles.Code.Infrastructure.Services.GameRuleService
             if (_container.IsFull)
             {
                 Resolve();
-                
             }
         }
 
         private void Resolve()
         {
-            
+            _gameStateMachine.Enter<GameOverState>();
         }
     }
 }

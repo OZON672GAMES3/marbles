@@ -5,7 +5,7 @@ namespace Marbles.Code.Data
     [CreateAssetMenu(fileName = "GameConfig", menuName = "Configs/GameConfig")]
     public class GameConfig : ScriptableObject
     {
-        [Header("Slots for match count")]
+        [Header("Slots for marbles")]
         public int SlotsCount;
         
         [Header("Marbles count")]

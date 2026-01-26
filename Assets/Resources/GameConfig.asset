@@ -12,4 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce9281cc715a44588825e8582ceb0723, type: 3}
   m_Name: GameConfig
   m_EditorClassIdentifier: Assembly-CSharp::Marbles.Code.Data.GameConfig
-  SlotsCount: 0
+  SlotsCount: 7
+  RedMarblesCount: 2
+  BlueMarblesCount: 3
+  YellowMarblesCount: 4
+  GreenMarblesCount: 5

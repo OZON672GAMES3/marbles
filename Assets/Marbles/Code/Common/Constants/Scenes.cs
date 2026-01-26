@@ -1,4 +1,4 @@
-namespace Marbles.Code.Gameplay.Constants
+namespace Marbles.Code.Common.Constants
 {
     public static class Scenes
     {

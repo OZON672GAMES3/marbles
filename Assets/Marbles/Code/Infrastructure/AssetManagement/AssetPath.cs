@@ -1,4 +1,4 @@
-namespace Marbles.Code.Infrastructure.AssenManagement
+namespace Marbles.Code.Infrastructure.AssetManagement
 {
     public static class AssetPath
     {

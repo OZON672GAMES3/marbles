@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Marbles.Code.Data.MarbleConfig;
 using Marbles.Code.Infrastructure.Services.GameRuleService;
+using Marbles.Code.Infrastructure.Services.MatchRule;
 using Marbles.Code.Infrastructure.Services.StaticData;
 using UnityEngine;
 using Zenject;
@@ -10,19 +11,24 @@ namespace Marbles.Code.Logic.Marbles
     public class MarblesContainer : MonoBehaviour, IMarblesContainer
     {
         [HideInInspector]
-        public List<SlotView> Slots;
+        public List<SlotView> Slots = new();
 
         private readonly List<Marble> _marbles = new();
         private IStaticDataService _staticDataService;
         private IGameOverService _gameOverService;
-        
+        private IMatchRuleService _matchRuleService;
+
         public bool IsFull => _marbles.Count >= Slots.Count;
 
         [Inject]
-        public void Construct(IStaticDataService staticDataService, IGameOverService gameOverService)
+        public void Construct(
+            IStaticDataService staticDataService,
+            IGameOverService gameOverService,
+            IMatchRuleService matchRuleService)
         {
             _staticDataService = staticDataService;
             _gameOverService = gameOverService;
+            _matchRuleService = matchRuleService;
         }
 
         public void AddMarble(Marble marble)
@@ -33,10 +39,7 @@ namespace Marbles.Code.Logic.Marbles
             _marbles.Add(marble);
 
             int index = _marbles.Count - 1;
-
-            MarbleConfig config =
-                _staticDataService.GetMarbleConfigByType(marble.Config.Type);
-            
+            MarbleConfig config = _staticDataService.GetMarbleConfigByType(marble.Config.Type);
             Slots[index].SetSprite(config.Sprite);
 
             CheckMatches();
@@ -51,33 +54,48 @@ namespace Marbles.Code.Logic.Marbles
         public void ClearMarblesContainer()
         {
             _marbles.Clear();
+            foreach (SlotView slot in Slots)
+                slot.Clear();
         }
 
         private void CheckMatches()
         {
-            if (_marbles.Count < _staticDataService.GameConfig.MatchLength)
+            if (_marbles.Count < 2)
                 return;
 
-            int count = 1;
+            int i = 0;
 
-            for (int i = 1; i < _marbles.Count; i++)
+            while (i < _marbles.Count)
             {
-                if (_marbles[i].Config.Type == _marbles[i - 1].Config.Type)
+                MarbleType type = _marbles[i].Config.Type;
+
+                if (!_matchRuleService.TryGetMatchLength(type, out int requiredLength))
+                {
+                    i++;
+                    continue;
+                }
+
+                int count = 1;
+                int j = i + 1;
+
+                while (j < _marbles.Count && _marbles[j].Config.Type == type)
                 {
                     count++;
+                    j++;
+                }
 
-                    if (count >= _staticDataService.GameConfig.MatchLength)
-                    {
-                        RemoveMatch(i, count);
-                        return;
-                    }
-                }
-                else
+                if (count >= requiredLength)
                 {
-                    count = 1;
+                    RemoveMatch(j - 1, count);
+                    i = 0;
+                    continue;
                 }
+
+                i = j;
             }
         }
+
+
 
         private void RemoveMatch(int endIndex, int matchCount)
         {
@@ -96,12 +114,10 @@ namespace Marbles.Code.Logic.Marbles
         {
             for (int i = 0; i < _marbles.Count; i++)
             {
-                MarbleConfig config =
-                    _staticDataService.GetMarbleConfigByType(_marbles[i].Config.Type);
-
+                MarbleConfig config = _staticDataService.GetMarbleConfigByType(_marbles[i].Config.Type);
                 Slots[i].SetSprite(config.Sprite);
             }
-            
+
             for (int i = _marbles.Count; i < Slots.Count; i++)
                 Slots[i].Clear();
         }

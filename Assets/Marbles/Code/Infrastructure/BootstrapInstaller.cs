@@ -1,12 +1,14 @@
-using Marbles.Code.Infrastructure.AssenManagement;
+using Marbles.Code.Infrastructure.AssetManagement;
 using Marbles.Code.Infrastructure.Factories;
 using Marbles.Code.Infrastructure.SceneLoad;
 using Marbles.Code.Infrastructure.Services.GameRuleService;
+using Marbles.Code.Infrastructure.Services.MatchRule;
 using Marbles.Code.Infrastructure.Services.PersistantProgress;
 using Marbles.Code.Infrastructure.Services.SaveLoad;
 using Marbles.Code.Infrastructure.Services.StaticData;
 using Marbles.Code.Infrastructure.States;
 using Marbles.Code.Infrastructure.States.Factory;
+using Marbles.Code.Logic;
 using Zenject;
 
 namespace Marbles.Code.Infrastructure
@@ -19,6 +21,7 @@ namespace Marbles.Code.Infrastructure
             Container.Bind<IAssetProvider>().To<AssetProvider>().AsSingle();
             Container.Bind<IStaticDataService>().To<StaticDataService>().AsSingle();
             Container.Bind<IGameOverService>().To<GameOverService>().AsSingle();
+            Container.Bind<IMatchRuleService>().To<MatchRuleService>().AsSingle();
 
             BindSelf();
 
@@ -65,6 +68,7 @@ namespace Marbles.Code.Infrastructure
             Container.BindInterfacesAndSelfTo<LoadProgressState>().AsSingle();
             Container.BindInterfacesAndSelfTo<LoadLevelState>().AsSingle();
             Container.BindInterfacesAndSelfTo<GameLoopState>().AsSingle();
+            Container.BindInterfacesAndSelfTo<GameOverState>().AsSingle();
         }
     }
 }

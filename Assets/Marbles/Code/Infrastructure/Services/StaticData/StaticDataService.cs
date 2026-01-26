@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Marbles.Code.Data;
 using Marbles.Code.Data.MarbleConfig;
-using Marbles.Code.Infrastructure.AssenManagement;
+using Marbles.Code.Infrastructure.AssetManagement;
 using UnityEngine;
 
 namespace Marbles.Code.Infrastructure.Services.StaticData

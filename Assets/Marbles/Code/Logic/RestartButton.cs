@@ -1,4 +1,5 @@
 using Marbles.Code.Infrastructure.Factories;
+using Marbles.Code.Infrastructure.States;
 using Marbles.Code.Logic.Marbles;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,13 +14,19 @@ namespace Marbles.Code.Logic
         private IMarblesStorage _marblesStorage;
         private IMarblesSpawner _marblesSpawner;
         private IMarblesContainer _marblesContainer;
+        private IGameStateMachine _gameStateMachine;
 
         [Inject]
-        public void Construct(IMarblesStorage marblesStorage, IMarblesSpawner marblesSpawner, IMarblesContainer marblesContainer)
+        public void Construct(
+            IMarblesStorage marblesStorage,
+            IMarblesSpawner marblesSpawner,
+            IMarblesContainer marblesContainer,
+            IGameStateMachine gameStateMachine)
         {
             _marblesContainer = marblesContainer;
             _marblesSpawner = marblesSpawner;
             _marblesStorage = marblesStorage;
+            _gameStateMachine = gameStateMachine;
         }
 
         private void Awake()
@@ -32,6 +39,7 @@ namespace Marbles.Code.Logic
             _marblesStorage.Clean();
             _marblesContainer.ClearMarblesContainer();
             _marblesSpawner.InstantiateMarbles();
+            _gameStateMachine.Enter<GameLoopState>();
         }
 
         private void OnDestroy()

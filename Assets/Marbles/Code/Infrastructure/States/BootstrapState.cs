@@ -1,4 +1,4 @@
-using Marbles.Code.Gameplay.Constants;
+using Marbles.Code.Common.Constants;
 using Marbles.Code.Infrastructure.SceneLoad;
 using Marbles.Code.Infrastructure.Services.StaticData;
 
