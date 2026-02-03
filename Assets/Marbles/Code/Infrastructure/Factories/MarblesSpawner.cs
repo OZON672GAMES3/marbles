@@ -1,6 +1,6 @@
 using Marbles.Code.Data.MarbleConfig;
+using Marbles.Code.Gameplay.Logic.Marbles;
 using Marbles.Code.Infrastructure.Services.StaticData;
-using Marbles.Code.Logic.Marbles;
 using UnityEngine;
 
 namespace Marbles.Code.Infrastructure.Factories

@@ -1,3 +1,4 @@
+using Marbles.Code.Gameplay.Windows;
 using Marbles.Code.Infrastructure.Factories;
 using Marbles.Code.Infrastructure.SceneLoad;
 
@@ -9,17 +10,20 @@ namespace Marbles.Code.Infrastructure.States
         private readonly ISceneLoader _sceneLoader;
         private readonly IGameFactory _gameFactory;
         private readonly IMarblesSpawner _marblesSpawner;
+        private readonly IWindowService _windowService;
 
         public LoadLevelState(
             IGameStateMachine gameStateMachine,
             ISceneLoader sceneLoader,
             IGameFactory gameFactory, 
-            IMarblesSpawner marblesSpawner)
+            IMarblesSpawner marblesSpawner,
+            IWindowService windowService)
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
             _gameFactory = gameFactory;
             _marblesSpawner = marblesSpawner;
+            _windowService = windowService;
         }
 
         public void Enter(string payload)
@@ -34,7 +38,8 @@ namespace Marbles.Code.Infrastructure.States
 
         private void OnLoaded()
         {
-            _gameFactory.CreateHud();
+            // _gameFactory.CreateHud();
+            _windowService.Open(WindowType.MarblesUiWindow);
             _gameFactory.CreateBackground();
             _gameFactory.CreateColliderBorders();
             _marblesSpawner.InstantiateMarbles();

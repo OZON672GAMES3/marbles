@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Marbles.Code.Logic.Marbles;
+using Marbles.Code.Gameplay.Logic.Marbles;
 
 namespace Marbles.Code.Infrastructure.Factories
 {
@@ -7,5 +7,6 @@ namespace Marbles.Code.Infrastructure.Factories
     {
         List<Marble> Marbles { get; set; }
         void Clean();
+        void RemoveMarble(Marble marble);
     }
 }

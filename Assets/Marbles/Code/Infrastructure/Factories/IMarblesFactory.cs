@@ -1,5 +1,5 @@
 using Marbles.Code.Data.MarbleConfig;
-using Marbles.Code.Logic.Marbles;
+using Marbles.Code.Gameplay.Logic.Marbles;
 using UnityEngine;
 
 namespace Marbles.Code.Infrastructure.Factories

@@ -1,9 +1,10 @@
 using System.Collections.Generic;
+using Marbles.Code.Gameplay.Logic;
+using Marbles.Code.Gameplay.Logic.Marbles;
+using Marbles.Code.Gameplay.Windows.View;
 using Marbles.Code.Infrastructure.AssetManagement;
 using Marbles.Code.Infrastructure.Services.PersistantProgress;
 using Marbles.Code.Infrastructure.Services.StaticData;
-using Marbles.Code.Logic;
-using Marbles.Code.Logic.Marbles;
 using UnityEngine;
 using Zenject;
 
@@ -27,11 +28,11 @@ namespace Marbles.Code.Infrastructure.Factories
         
         public GameObject CreateHud()
         {
-            GameObject hudInstance = InstantiateRegistered(AssetPath.HudPath);
-            BindMarblesContainer(hudInstance);
-            SetupSlotViews(hudInstance);
+            GameObject uiRoot = InstantiateRegistered(AssetPath.HudPath);
+            BindMarblesContainer(uiRoot);
+            SetupSlotViews(uiRoot);
             
-            return hudInstance;
+            return uiRoot;
         }
 
         public GameObject CreateColliderBorders() => InstantiateRegistered(AssetPath.ColliderContainer);
@@ -44,22 +45,22 @@ namespace Marbles.Code.Infrastructure.Factories
             ProgressWriters.Clear();
         }
 
-        private void BindMarblesContainer(GameObject hudInstance)
+        private void BindMarblesContainer(GameObject uiRoot)
         {
-            MarblesContainer handler = hudInstance.GetComponentInChildren<MarblesContainer>();
+            MarblesContainer handler = uiRoot.GetComponentInChildren<MarblesContainer>();
             _container.Bind<IMarblesContainer>().FromInstance(handler).AsSingle();
-            _container.InjectGameObject(hudInstance);
+            _container.InjectGameObject(uiRoot);
         }
 
-        private void SetupSlotViews(GameObject hudInstance)
+        private void SetupSlotViews(GameObject uiRoot)
         {
-            MarblesContainer container = hudInstance.GetComponentInChildren<MarblesContainer>();
-            Transform parent = container.transform;
+            MarblesContainer container = uiRoot.GetComponentInChildren<MarblesContainer>();
+            // Transform parent = container.transform;
 
             for (int i = 0; i < _staticDataService.GameConfig.SlotsCount; i++)
             {
                 GameObject slotGo = InstantiateRegistered(AssetPath.SlotPath);
-                slotGo.transform.SetParent(parent, false);
+                // slotGo.transform.SetParent(parent, false);
                 
                 SlotView slot = slotGo.GetComponent<SlotView>();
                 container.RegisterSlot(slot);

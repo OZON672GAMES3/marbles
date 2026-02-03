@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using Marbles.Code.Logic.Marbles;
+using Marbles.Code.Gameplay.Logic.Marbles;
 using UnityEngine;
 
 namespace Marbles.Code.Infrastructure.Factories
@@ -17,6 +17,12 @@ namespace Marbles.Code.Infrastructure.Factories
                 if (marble != null)
                     Object.Destroy(marble.gameObject);
             }
+        }
+
+        public void RemoveMarble(Marble marble)
+        {
+            Marbles.Remove(marble);
+            GameObject.Destroy(marble.gameObject);
         }
     }
 }

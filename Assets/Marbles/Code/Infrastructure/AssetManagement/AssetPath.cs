@@ -8,5 +8,6 @@ namespace Marbles.Code.Infrastructure.AssetManagement
         public const string ColliderContainer = "ColliderContainer";
         public const string MarblesPath = "Marbles";
         public const string GameConfigPath = "GameConfig";
+        public const string WindowConfigPath = "Configs/WindowConfigs";
     }
 }
