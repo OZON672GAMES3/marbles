@@ -61,6 +61,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6518ace4311c47909ff65f30b885312c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Marbles.Code.Logic.MarbleClickHandler
+  _clickVfx: {fileID: 305694776587608058, guid: 03c03bdda93cf4249a7f750d32d37e92, type: 3}
 --- !u!212 &264219743707065844
 SpriteRenderer:
   m_ObjectHideFlags: 0

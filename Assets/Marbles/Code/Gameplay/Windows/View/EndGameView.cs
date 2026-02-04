@@ -1,16 +1,6 @@
 namespace Marbles.Code.Gameplay.Windows.View
 {
-    public class EndGameView : Window
+    public class EndGameView : AnimatedScaleWindowView
     {
-        protected override void Initialize()
-        {
-            gameObject.SetActive(true);
-        }
-
-        protected override void Cleanup()
-        {
-            base.Cleanup();
-            gameObject.SetActive(false);
-        }
     }
 }

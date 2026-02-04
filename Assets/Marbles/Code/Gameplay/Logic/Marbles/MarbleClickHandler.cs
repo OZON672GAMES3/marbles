@@ -23,7 +23,7 @@ namespace Marbles.Code.Gameplay.Logic.Marbles
         
         public void OnPointerClick(PointerEventData eventData)
         {
-            _particlesService.Play(transform.position);
+            _particlesService.Play(_clickVfx, transform.position);
             Marble marble = GetComponent<Marble>();
             _marblesContainer.AddMarble(marble);
             _marblesStorage.RemoveMarble(marble);

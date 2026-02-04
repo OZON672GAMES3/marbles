@@ -37,7 +37,7 @@ namespace Marbles.Code.Infrastructure.Services.RuleService
             if (_marblesContainer.IsFull)
                 _gameStateMachine.Enter<GameOverState>();
             
-            if (_marblesStorage.Marbles.Count <= 1)
+            if (_marblesStorage.Marbles.Count == 0)
                 _gameStateMachine.Enter<GameWinState>();
         }
     }

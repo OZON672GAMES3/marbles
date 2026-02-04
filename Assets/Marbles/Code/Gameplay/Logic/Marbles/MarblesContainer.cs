@@ -4,7 +4,6 @@ using Marbles.Code.Data.MarbleConfig;
 using Marbles.Code.Gameplay.Windows.View;
 using Marbles.Code.Infrastructure.Services.RuleService.MatchRule;
 using Marbles.Code.Infrastructure.Services.StaticData;
-using UnityEngine;
 
 namespace Marbles.Code.Gameplay.Logic.Marbles
 {
@@ -16,7 +15,10 @@ namespace Marbles.Code.Gameplay.Logic.Marbles
         private readonly List<Marble> _marbles = new();
         private readonly IStaticDataService _staticDataService;
         private readonly IMatchRuleService _matchRuleService;
-
+        
+        private bool _isResolvingMatch;
+        private bool _pendingMarbleAddedNotification;
+        
         public bool IsFull => _marbles.Count >= Slots.Count;
 
         public MarblesContainer(
@@ -37,10 +39,14 @@ namespace Marbles.Code.Gameplay.Logic.Marbles
             int index = _marbles.Count - 1;
             MarbleConfig config = _staticDataService.GetMarbleConfigByType(marble.Config.Type);
             Slots[index].SetSprite(config.Sprite);
-
-            CheckMatches();
             
-            OnMarbleAdded?.Invoke();
+            _pendingMarbleAddedNotification = true;
+            CheckMatches();
+        }
+        
+        public void FinalizeMarbleAdded()
+        {
+            NotifyMarbleAddedIfReady();
         }
 
         public void RegisterSlot(SlotView slotView)
@@ -57,6 +63,9 @@ namespace Marbles.Code.Gameplay.Logic.Marbles
 
         private void CheckMatches()
         {
+            if (_isResolvingMatch)
+                return;
+
             if (_marbles.Count < 2)
                 return;
 
@@ -84,27 +93,59 @@ namespace Marbles.Code.Gameplay.Logic.Marbles
                 if (count >= requiredLength)
                 {
                     RemoveMatch(j - 1, count);
-                    i = 0;
-                    continue;
+                    return;
                 }
 
                 i = j;
             }
         }
 
-
-
         private void RemoveMatch(int endIndex, int matchCount)
         {
+            _isResolvingMatch = true;
             int startIndex = endIndex - matchCount + 1;
+            SlotView targetSlot = Slots[startIndex];
+            int remainingAnimations = matchCount - 1;
+            const float moveDuration = 0.25f;
+            const float fadeDuration = 0.2f;
 
-            for (int i = endIndex; i >= startIndex; i--)
+            if (remainingAnimations > 0)
             {
-                _marbles.RemoveAt(i);
-                Slots[i].Clear();
+                for (int i = endIndex; i > startIndex; i--)
+                {
+                    int currentIndex = i;
+                    SlotView slot = Slots[currentIndex];
+                    slot.AnimateMergeTo(targetSlot, moveDuration, fadeDuration, 0f, () =>
+                    {
+                        RemoveAt(currentIndex);
+                        remainingAnimations--;
+                        if (remainingAnimations == 0)
+                            RemoveMatchAnchor(startIndex, targetSlot, moveDuration, fadeDuration);
+                    });
+                }
             }
+            else
+            {
+                RemoveMatchAnchor(startIndex, targetSlot, moveDuration, fadeDuration);
+            }
+        }
 
-            Rearrange();
+        private void RemoveMatchAnchor(int startIndex, SlotView targetSlot, float moveDuration, float fadeDuration)
+        {
+            targetSlot.AnimateMergeTo(targetSlot, moveDuration, fadeDuration, moveDuration, () =>
+            {
+                RemoveAt(startIndex);
+                Rearrange();
+                _isResolvingMatch = false;
+                CheckMatches();
+                NotifyMarbleAddedIfReady();
+            });
+        }
+
+        private void RemoveAt(int index)
+        {
+            _marbles.RemoveAt(index);
+            Slots[index].Clear();
         }
 
         private void Rearrange()
@@ -117,6 +158,15 @@ namespace Marbles.Code.Gameplay.Logic.Marbles
 
             for (int i = _marbles.Count; i < Slots.Count; i++)
                 Slots[i].Clear();
+        }
+        
+        private void NotifyMarbleAddedIfReady()
+        {
+            if (_isResolvingMatch || !_pendingMarbleAddedNotification)
+                return;
+
+            _pendingMarbleAddedNotification = false;
+            OnMarbleAdded?.Invoke();
         }
     }
 }

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: WinGameWindow
   m_EditorClassIdentifier: Assembly-CSharp::Marbles.Code.Gameplay.Windows.Config.WindowConfig
   Type: 3
-  Prefab: {fileID: 6281538991144169484, guid: ded447a9e363f9b4c9131926613c5c64, type: 3}
+  Prefab: {fileID: 1850227047360334427, guid: 9640ac15e46dc7444a974b7358ac3124, type: 3}

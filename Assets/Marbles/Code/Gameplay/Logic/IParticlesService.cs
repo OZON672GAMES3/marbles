@@ -4,6 +4,6 @@ namespace Marbles.Code.Gameplay.Logic
 {
     public interface IParticlesService
     {
-        void Play(Vector3 position);
+        void Play(ParticleSystem prefab, Vector3 position);
     }
 }

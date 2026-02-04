@@ -5,24 +5,27 @@ namespace Marbles.Code.Gameplay.Logic
 {
     public class ParticlesService : IParticlesService
     {
-        private readonly IStaticDataService _staticData;
         private readonly GameObject _vfxRoot;
 
-        public ParticlesService(IStaticDataService staticData)
+        public ParticlesService()
         {
-            _staticData = staticData;
             GameObject vfxRoot = new GameObject("VFXRoot");
             _vfxRoot = vfxRoot;
         }
 
-        public void Play(Vector3 position)
+        public void Play(ParticleSystem prefab, Vector3 position)
         {
-            ParticleSystem particleSystem = _staticData.ParticleSystem;
+            if (prefab == null)
+            {
+                return;
+            }
 
-            ParticleSystem particles = Object.Instantiate(particleSystem, position, Quaternion.identity, _vfxRoot.transform);
+            ParticleSystem particles = Object.Instantiate(prefab, position, Quaternion.identity, _vfxRoot.transform);
             particles.Play();
-            
-            Object.Destroy(particles.gameObject, particles.main.duration);
+
+            ParticleSystem.MainModule mainModule = particles.main;
+            float lifetime = mainModule.duration + mainModule.startLifetime.constantMax;
+            Object.Destroy(particles.gameObject, lifetime);
         }
     }
 }
