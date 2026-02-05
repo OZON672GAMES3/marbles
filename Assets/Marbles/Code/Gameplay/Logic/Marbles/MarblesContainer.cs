@@ -138,9 +138,10 @@ namespace Marbles.Code.Gameplay.Logic.Marbles
 
         private void RemoveMatchAnchor(int startIndex, SlotView targetSlot, float moveDuration, float fadeDuration)
         {
-            _ivfxService.PlayMerge(Vector3.zero);
             targetSlot.AnimateMergeTo(targetSlot, moveDuration, fadeDuration, moveDuration, () =>
             {
+                Vector2 mergeScreenPosition = RectTransformUtility.WorldToScreenPoint(null, targetSlot.transform.position);
+                _ivfxService.PlayMergeFromScreenPosition(mergeScreenPosition);
                 RemoveAt(startIndex);
                 Rearrange();
                 _isResolvingMatch = false;
