@@ -4,6 +4,8 @@ using Marbles.Code.Data.MarbleConfig;
 using Marbles.Code.Gameplay.Windows.View;
 using Marbles.Code.Infrastructure.Services.RuleService.MatchRule;
 using Marbles.Code.Infrastructure.Services.StaticData;
+using Marbles.Code.Infrastructure.Services.VFX;
+using UnityEngine;
 
 namespace Marbles.Code.Gameplay.Logic.Marbles
 {
@@ -15,18 +17,22 @@ namespace Marbles.Code.Gameplay.Logic.Marbles
         private readonly List<Marble> _marbles = new();
         private readonly IStaticDataService _staticDataService;
         private readonly IMatchRuleService _matchRuleService;
-        
+        private readonly IVFXService _ivfxService;
+
         private bool _isResolvingMatch;
         private bool _pendingMarbleAddedNotification;
-        
+        private GameObject _vfxRoot;
+
         public bool IsFull => _marbles.Count >= Slots.Count;
 
         public MarblesContainer(
             IStaticDataService staticDataService,
-            IMatchRuleService matchRuleService)
+            IMatchRuleService matchRuleService,
+            IVFXService ivfxService)
         {
             _staticDataService = staticDataService;
             _matchRuleService = matchRuleService;
+            _ivfxService = ivfxService;
         }
 
         public void AddMarble(Marble marble)
@@ -132,6 +138,7 @@ namespace Marbles.Code.Gameplay.Logic.Marbles
 
         private void RemoveMatchAnchor(int startIndex, SlotView targetSlot, float moveDuration, float fadeDuration)
         {
+            _ivfxService.PlayMerge(Vector3.zero);
             targetSlot.AnimateMergeTo(targetSlot, moveDuration, fadeDuration, moveDuration, () =>
             {
                 RemoveAt(startIndex);

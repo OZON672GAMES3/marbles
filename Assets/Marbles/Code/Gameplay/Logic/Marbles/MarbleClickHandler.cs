@@ -1,4 +1,5 @@
 using Marbles.Code.Infrastructure.Factories;
+using Marbles.Code.Infrastructure.Services.VFX;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
@@ -11,19 +12,19 @@ namespace Marbles.Code.Gameplay.Logic.Marbles
         
         private IMarblesContainer _marblesContainer;
         private IMarblesStorage _marblesStorage;
-        private IParticlesService _particlesService;
+        private IVFXService _ivfxService;
 
         [Inject]
-        public void Construct(IMarblesContainer marblesContainer, IMarblesStorage marblesStorage, IParticlesService particlesService)
+        public void Construct(IMarblesContainer marblesContainer, IMarblesStorage marblesStorage, IVFXService ivfxService)
         {
             _marblesContainer = marblesContainer;
             _marblesStorage = marblesStorage;
-            _particlesService = particlesService;
+            _ivfxService = ivfxService;
         }
         
         public void OnPointerClick(PointerEventData eventData)
         {
-            _particlesService.Play(_clickVfx, transform.position);
+            _ivfxService.Play(_clickVfx, transform.position);
             Marble marble = GetComponent<Marble>();
             _marblesContainer.AddMarble(marble);
             _marblesStorage.RemoveMarble(marble);
