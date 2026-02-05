@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5d7e5db3d8740f391d7af030c6cfb00, type: 3}
   m_Name: OnMarbleMergeVFX
   m_EditorClassIdentifier: Assembly-CSharp::Marbles.Code.Gameplay.Logic.ParticleConfigs
-  ParticleSystem: {fileID: 0}
+  ParticleSystem: {fileID: 5112403345868107899, guid: c169a07599256a644b31c3bd1ecec137, type: 3}
