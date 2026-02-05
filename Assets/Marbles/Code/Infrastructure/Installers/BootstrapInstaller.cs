@@ -1,3 +1,4 @@
+using Marbles.Code.Gameplay.Cameras;
 using Marbles.Code.Gameplay.Logic;
 using Marbles.Code.Gameplay.Logic.Marbles;
 using Marbles.Code.Gameplay.Windows;
@@ -9,6 +10,7 @@ using Marbles.Code.Infrastructure.Services.RuleService;
 using Marbles.Code.Infrastructure.Services.RuleService.MatchRule;
 using Marbles.Code.Infrastructure.Services.SaveLoad;
 using Marbles.Code.Infrastructure.Services.StaticData;
+using Marbles.Code.Infrastructure.Services.VFX;
 using Marbles.Code.Infrastructure.States;
 using Marbles.Code.Infrastructure.States.Factory;
 using Zenject;
@@ -27,7 +29,8 @@ namespace Marbles.Code.Infrastructure.Installers
             Container.Bind<IMatchRuleService>().To<MatchRuleService>().AsSingle();
             Container.Bind<IWindowFactory>().To<WindowFactory>().AsSingle();
             Container.Bind<IWindowService>().To<WindowService>().AsSingle();
-            Container.Bind<IParticlesService>().To<ParticlesService>().AsSingle();
+            Container.Bind<IVFXService>().To<VFXService>().AsSingle();
+            Container.Bind<ICameraProvider>().To<CameraProvider>().AsSingle();
 
             BindSelf();
 

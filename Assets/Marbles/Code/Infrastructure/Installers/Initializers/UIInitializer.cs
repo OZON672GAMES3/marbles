@@ -7,8 +7,9 @@ namespace Marbles.Code.Infrastructure.Installers.Initializers
     public class UIInitializer: MonoBehaviour, IInitializable
     {
         public RectTransform UIRoot;
-        private IWindowFactory _windowFactory;
         
+        private IWindowFactory _windowFactory;
+
         [Inject]
         public void Construct(IWindowFactory windowFactory)
         {

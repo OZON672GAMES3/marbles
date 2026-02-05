@@ -17,8 +17,11 @@ namespace Marbles.Code.Infrastructure.Services.StaticData
         
         private GameConfig _gameConfig;
         private ParticleSystem _particleSystem;
+        private ParticleSystem _mergeParticleSystem;
 
         public ParticleSystem ParticleSystem => _particleSystem; 
+        
+        public ParticleSystem MergeParticleSystem => _mergeParticleSystem;
         
         public GameConfig GameConfig => _gameConfig;
         
@@ -56,6 +59,7 @@ namespace Marbles.Code.Infrastructure.Services.StaticData
         private void LoadParticleConfigs()
         {
             _particleSystem = Resources.Load<ParticleSystem>("Particles/OnMarbleClickEffect");
+            _mergeParticleSystem = Resources.Load<ParticleSystem>("Particles/OnMarbleMergeEffect");
         }
     }
 }

@@ -13,6 +13,7 @@ namespace Marbles.Code.Infrastructure.Services.StaticData
         void LoadAll();
         GameConfig GameConfig { get; }
         ParticleSystem ParticleSystem { get; }
+        ParticleSystem MergeParticleSystem { get; }
         WindowConfig GetWindowConfigByType(WindowType type);
     }
 }
