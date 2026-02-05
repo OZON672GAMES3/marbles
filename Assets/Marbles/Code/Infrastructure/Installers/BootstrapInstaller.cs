@@ -21,34 +21,48 @@ namespace Marbles.Code.Infrastructure.Installers
     {
         public override void InstallBindings()
         {
-            Container.Bind<ISceneLoader>().To<SceneLoader>().AsSingle();
-            Container.Bind<IAssetProvider>().To<AssetProvider>().AsSingle();
-            Container.Bind<IStaticDataService>().To<StaticDataService>().AsSingle();
-            Container.Bind<IMarblesContainer>().To<MarblesContainer>().AsSingle();
-            Container.BindInterfacesAndSelfTo<GameRuleService>().AsSingle();
-            Container.Bind<IMatchRuleService>().To<MatchRuleService>().AsSingle();
-            Container.Bind<IWindowFactory>().To<WindowFactory>().AsSingle();
-            Container.Bind<IWindowService>().To<WindowService>().AsSingle();
-            Container.Bind<IVFXService>().To<VFXService>().AsSingle();
-            Container.Bind<ICameraProvider>().To<CameraProvider>().AsSingle();
-
             BindSelf();
-
+            
             BindStateMachine();
+            BindServices();
             BindFactories();
             BindSaveLoadServices();
             BindLogic();
+            BindUi();
+            BindInfrastructureServices();
+        }
+
+        public void Initialize()
+        {
+            Container.Resolve<IGameStateMachine>().Enter<BootstrapState>();
+        }
+
+        private void BindInfrastructureServices()
+        {
+            Container.Bind<ISceneLoader>().To<SceneLoader>().AsSingle();
+            Container.Bind<ICameraProvider>().To<CameraProvider>().AsSingle();
+            Container.Bind<IAssetProvider>().To<AssetProvider>().AsSingle();
+            Container.Bind<IStaticDataService>().To<StaticDataService>().AsSingle();
+        }
+        
+        private void BindUi()
+        {
+            Container.Bind<IWindowFactory>().To<WindowFactory>().AsSingle();
+            Container.Bind<IWindowService>().To<WindowService>().AsSingle();
+        }
+
+        private void BindServices()
+        {
+            Container.BindInterfacesAndSelfTo<GameRuleService>().AsSingle();
+            Container.Bind<IMatchRuleService>().To<MatchRuleService>().AsSingle();
+            Container.Bind<IVFXService>().To<VFXService>().AsSingle();
         }
 
         private void BindLogic()
         {
             Container.Bind<IMarblesSpawner>().To<MarblesSpawner>().AsSingle();
             Container.Bind<IMarblesStorage>().To<MarblesStorage>().AsSingle();
-        }
-
-        public void Initialize()
-        {
-            Container.Resolve<IGameStateMachine>().Enter<BootstrapState>();
+            Container.Bind<IMarblesContainer>().To<MarblesContainer>().AsSingle();
         }
 
         private void BindFactories()

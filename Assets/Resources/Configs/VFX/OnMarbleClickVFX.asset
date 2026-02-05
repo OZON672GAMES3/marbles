@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d5d7e5db3d8740f391d7af030c6cfb00, type: 3}
-  m_Name: ParticleConfig
+  m_Name: OnMarbleClickVFX
   m_EditorClassIdentifier: Assembly-CSharp::Marbles.Code.Gameplay.Logic.ParticleConfigs
   ParticleSystem: {fileID: 305694776587608058, guid: 03c03bdda93cf4249a7f750d32d37e92, type: 3}

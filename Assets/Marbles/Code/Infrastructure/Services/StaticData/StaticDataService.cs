@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Marbles.Code.Data;
 using Marbles.Code.Data.MarbleConfig;
-using Marbles.Code.Gameplay.Logic;
+using Marbles.Code.Data.VFXs;
 using Marbles.Code.Gameplay.Windows;
 using Marbles.Code.Gameplay.Windows.Config;
 using Marbles.Code.Infrastructure.AssetManagement;
@@ -16,12 +16,12 @@ namespace Marbles.Code.Infrastructure.Services.StaticData
         private Dictionary<WindowType, WindowConfig> _windowConfigs = new();
         
         private GameConfig _gameConfig;
-        private ParticleSystem _particleSystem;
-        private ParticleSystem _mergeParticleSystem;
+        private VFXConfig _onMarbleClickVFX;
+        private VFXConfig _mergeMarblesVFX;
 
-        public ParticleSystem ParticleSystem => _particleSystem; 
+        public VFXConfig OnMarbleClickVFX => _onMarbleClickVFX; 
         
-        public ParticleSystem MergeParticleSystem => _mergeParticleSystem;
+        public VFXConfig MergeMarblesVFX => _mergeMarblesVFX;
         
         public GameConfig GameConfig => _gameConfig;
         
@@ -36,7 +36,7 @@ namespace Marbles.Code.Infrastructure.Services.StaticData
             LoadMarbleConfigs();
             LoadGameConfig();
             LoadWindowConfig();
-            LoadParticleConfigs();
+            LoadVFXConfigs();
         }
 
         private void LoadMarbleConfigs()
@@ -56,10 +56,10 @@ namespace Marbles.Code.Infrastructure.Services.StaticData
             _windowConfigs = windowConfigs.ToDictionary(x => x.Type, x => x);
         }
 
-        private void LoadParticleConfigs()
+        private void LoadVFXConfigs()
         {
-            _particleSystem = Resources.Load<ParticleSystem>("Particles/OnMarbleClickEffect");
-            _mergeParticleSystem = Resources.Load<ParticleSystem>("Particles/OnMarbleMergeEffect");
+            _onMarbleClickVFX = Resources.Load<VFXConfig>(AssetPath.OnMarbleClickVFXPath);
+            _mergeMarblesVFX = Resources.Load<VFXConfig>(AssetPath.OnMarblesMergeVFXPath);
         }
     }
 }
