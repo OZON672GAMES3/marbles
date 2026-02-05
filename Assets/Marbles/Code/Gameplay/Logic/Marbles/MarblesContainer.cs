@@ -48,13 +48,9 @@ namespace Marbles.Code.Gameplay.Logic.Marbles
             
             _pendingMarbleAddedNotification = true;
             CheckMatches();
-        }
-        
-        public void FinalizeMarbleAdded()
-        {
             NotifyMarbleAddedIfReady();
         }
-
+        
         public void RegisterSlot(SlotView slotView)
         {
             Slots.Add(slotView);

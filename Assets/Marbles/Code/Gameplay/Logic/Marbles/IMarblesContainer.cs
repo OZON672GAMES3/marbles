@@ -7,7 +7,6 @@ namespace Marbles.Code.Gameplay.Logic.Marbles
     {
         void AddMarble(Marble marble);
         void ClearMarblesContainer();
-        void FinalizeMarbleAdded();
         bool IsFull { get; }
         void RegisterSlot(SlotView slotView);
         event Action OnMarbleAdded;

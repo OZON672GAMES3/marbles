@@ -8,8 +8,6 @@ namespace Marbles.Code.Gameplay.Logic.Marbles
 {
     public class MarbleClickHandler : MonoBehaviour, IPointerClickHandler
     {
-        [SerializeField] private ParticleSystem _clickVfx;
-        
         private IMarblesContainer _marblesContainer;
         private IMarblesStorage _marblesStorage;
         private IVFXService _ivfxService;
@@ -24,7 +22,7 @@ namespace Marbles.Code.Gameplay.Logic.Marbles
         
         public void OnPointerClick(PointerEventData eventData)
         {
-            _ivfxService.Play(_clickVfx, transform.position);
+            _ivfxService.PlayAddMarbleVFX(transform.position);
             Marble marble = GetComponent<Marble>();
             _marblesContainer.AddMarble(marble);
             _marblesStorage.RemoveMarble(marble);

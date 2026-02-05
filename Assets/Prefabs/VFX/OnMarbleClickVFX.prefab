@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 305694776587608058}
   - component: {fileID: 3646227262850980540}
   m_Layer: 0
-  m_Name: OnMarbleClickEffect
+  m_Name: OnMarbleClickVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
